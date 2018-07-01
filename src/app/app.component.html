@@ -34,6 +34,13 @@
   <input id="model" type="text" (keyup)="onModelKeyUp($event)">
 </div>
 
+<div>
+  <p>Sort By:</p>
+  <button (click)="onYearClick()" [ngClass]="{active: sort === 'year'}">Year</button>
+  <button (click)="onMakeClick()" [ngClass]="{active: sort === 'make'}">Make</button>
+  <button (click)="onModelClick()" [ngClass]="{active: sort === 'model'}">Model</button>
+</div>
+
 <h2>{{filter}}</h2>
 
 <table>

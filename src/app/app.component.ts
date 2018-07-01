@@ -6,7 +6,6 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
   cars = [{'id': 1, 'make': 'Mitsubishi', 'model': 'Pajero', 'year': 1998},
     {'id': 2, 'make': 'Nissan', 'model': 'Frontier', 'year': 2008},
     {'id': 3, 'make': 'Dodge', 'model': 'Ram 2500', 'year': 1999},
@@ -1007,28 +1006,33 @@ export class AppComponent {
     {'id': 998, 'make': 'Mercedes-Benz', 'model': 'S-Class', 'year': 1986},
     {'id': 999, 'make': 'Pontiac', 'model': 'Grand Prix', 'year': 1984},
     {'id': 1000, 'make': 'Mitsubishi', 'model': 'Pajero', 'year': 1997}];
-  // filteredCars: any[];
-  year: number;
+  year: string;
   make: string;
   model: string;
-
-  constructor() {
-    // this.filteredCars = this.cars;
-  }
+  sort = 'id';
 
   onYearKeyUp(e) {
-    this.year = +e.target.value;
-    // this.filterCars();
+    this.year = e.target.value;
   }
 
   onMakeKeyUp(e) {
     this.make = e.target.value.trim().toLowerCase();
-    // this.filterCars();
   }
 
   onModelKeyUp(e) {
     this.model = e.target.value.trim().toLowerCase();
-    // this.filterCars();
+  }
+
+  onYearClick() {
+    this.sort = 'year';
+  }
+
+  onMakeClick() {
+    this.sort = 'make';
+  }
+
+  onModelClick() {
+    this.sort = 'model';
   }
 
   get filter() {
@@ -1037,19 +1041,25 @@ export class AppComponent {
 
   get filteredCars() {
     return this.cars.filter(c => {
-      const year = this.year ? c.year === this.year : true;
+      const year = this.year ? c.year.toString().indexOf(this.year) === 0 : true;
       const make = this.make ? c.make.toLowerCase().trim().indexOf(this.make) === 0 : true;
       const model = this.model ? c.model.toLowerCase().trim().indexOf(this.model) === 0 : true;
 
       return year && make && model;
-    });
+    }).sort(this.by(this.sort));
   }
 
-  // private filterCars() {
-  //   this.filteredCars = this.cars.filter(c => {
-  //     return (c.year === this.year) &&
-  //       (c.make.trim().toLowerCase().indexOf(this.make) === 0) &&
-  //       (c.model.trim().toLowerCase().indexOf(this.model) === 0);
-  //   });
-  // }
+  private by(prop) {
+    return function (a, b) {
+      let comparison = 0;
+
+      if (a[prop] > b[prop]) {
+        comparison = 1;
+      } else if (b[prop] > a[prop]) {
+        comparison = -1;
+      }
+
+      return comparison;
+    };
+  }
 }
