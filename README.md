@@ -1,5 +1,7 @@
 # Cars
 
+[![Build Status](https://travis-ci.org/dhobdensa/cars.png?branch=master)](https://travis-ci.org/dhobdensa/cars)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
