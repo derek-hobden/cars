@@ -43,6 +43,10 @@
 
 <h2>{{filter}}</h2>
 
+<div *ngFor="let beer of beers">
+  <div><img [src]="beer.image_url" alt="" height="100"> {{beer.name}} {{beer.abv}}%</div>
+</div>
+
 <table>
   <tr *ngFor="let car of filteredCars">
     <td>{{car.id}}</td>

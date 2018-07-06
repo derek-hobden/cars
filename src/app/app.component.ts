@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -1010,6 +1011,21 @@ export class AppComponent {
   make: string;
   model: string;
   sort = 'id';
+  beers;
+
+  constructor(private http: HttpClient) {
+    this.beers = http.get('https://api.punkapi.com/v2/beers')
+      .subscribe((data: Array<{ name: string, abv: number, image_url: string }>) => {
+        console.log(data);
+        this.beers = data.map(b => {
+          return {
+            name: b.name,
+            abv: b.abv,
+            image_url: b.image_url
+          };
+        });
+      });
+  }
 
   onYearKeyUp(e) {
     this.year = e.target.value;
@@ -1025,6 +1041,7 @@ export class AppComponent {
 
   onYearClick() {
     this.sort = 'year';
+    // this.appSvc.alertSassy(`Yo mamma drives a ${this.make} ${this.model}???`);
   }
 
   onMakeClick() {
